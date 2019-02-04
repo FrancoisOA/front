@@ -1,0 +1,59 @@
+<div class="side-one">
+  <!-- Heading -->
+  <div class="row heading">
+    <div class="col heading-avatar">
+      <div class="heading-avatar-icon">
+        <img src="https://cdn.vectoricons.net/wp-content/themes/checkout-child/images/me-as-icon-with-glass-transparent.png">
+      </div>
+    </div>
+    <div class="col heading-compose  float-right">
+      <i class="fa fa-user-plus fa-2x  float-right" aria-hidden="true" (click)="openForm()"></i>
+    </div>
+  </div>
+  <!-- Heading End -->
+
+  <!-- SearchBox -->
+  <div class="row searchBox">
+    <div class="col-12 searchBox-inner">
+      <div class="form-group has-feedback">
+        <input id="searchText" type="text" class="form-control" name="searchText" placeholder="Buscar" (keyup)="filterCustomer($event)">
+        <span class="fa fa-search form-control-feedback"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search Box End -->
+  <!-- sideBar -->
+  <div id="my-scroll">
+      <ul class="list-group mb-3">
+        <li class="list-group-item d-flex justify-content-between lh-condensed c-pointer" *ngFor="let customer of filteredCustomers" style="border-right: 0px;">
+          <div (click)="selectedCustomer(customer.id)">
+            <div>
+              <img id="icon-user" src="https://cdn.vectoricons.net/wp-content/themes/checkout-child/images/me-as-icon-with-glass-transparent.png" alt="icon" />
+            </div>
+            <h5 class="my-0">{{customer.name | titlecase | slice:0:30}}<span *ngIf="customer.name.length > 30">...</span></h5>
+            <small class="text-muted">{{customer.contact}}</small>
+          </div>
+          <div class="text-muted text-right">
+            <div (click)="selectedCustomer(customer.id)">{{customer.created_at | date:'dd/MM/yyyy'}}</div>
+
+            <div class="btn-group" dropdown placement="bottom right">
+              <a href="javascript:void(0);" id="options" dropdownToggle class="dropdown-toggle" aria-controls="dropdown-alignment">
+                <i class="fa fa-chevron-down"></i>
+              </a>
+              <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="button-alignment">
+                <li role="menuitem">
+                  <a class="dropdown-item" href="javascript:void(0);" (click)="extraData(customer)"><i class="fa fa-list"></i> Datos Extra</a>
+                </li>
+                <li role="menuitem">
+                  <a class="dropdown-item" href="javascript:void(0);"><i class="fa fa-edit"></i> Editar</a>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+        </li>
+      </ul>
+  </div>
+  <!-- Sidebar End -->
+</div>

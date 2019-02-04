@@ -1,0 +1,51 @@
+<div class="container-fluid app">
+  <div class="row app-one">
+
+    <div class="col-4 side">
+      <app-list-clients></app-list-clients>
+      <app-form-register></app-form-register>
+      <app-form-extra-data></app-form-extra-data>
+    </div>
+
+    <!-- New Message Sidebar End -->
+
+    <!-- Conversation Start -->
+    <div class="col-8 conversation" [ngClass]="{'hide': !visible}">
+      <!-- Heading -->
+      <div class="row heading">
+        <div class="col heading-avatar">
+          <div class="heading-avatar-icon">
+            <img src="https://cdn.vectoricons.net/wp-content/themes/checkout-child/images/me-as-icon-with-glass-transparent.png">
+          </div>
+        </div>
+        <div class="col-10 heading-name">
+          <a class="heading-name-meta">{{name_customer | titlecase}}</a>
+          <span class="heading-online">Online</span>
+        </div>
+        <div class="col  heading-dot float-right">
+          <i class="far fa-calendar fa-2x  float-right" aria-hidden="true" (click)="showCalendar()"></i>
+        </div>
+      </div>
+      <!-- Heading End -->
+
+      <!-- Message Box -->
+      <app-list-comments></app-list-comments>
+      <!-- Message Box End -->
+
+      <!-- Reply Box -->
+      <app-form-comment></app-form-comment>
+      <!-- Reply Box End -->
+    </div>
+    <!-- Conversation End -->
+
+    <div class="col-8" [ngClass]="{'show': !visible}">
+      <div class="row" style="height: 100%;">
+        <div *ngIf="calendarOptions">
+          <ng-fullcalendar #ucCalendar [options]="calendarOptions" [(eventsModel)]="listDataCalendar"></ng-fullcalendar>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- App One End -->
+</div>

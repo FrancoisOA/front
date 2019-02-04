@@ -1,0 +1,107 @@
+<div id="side-three" class="side-three">
+
+  <!-- Heading -->
+  <div class="row newMessage-heading">
+    <div class="row newMessage-main">
+      <div class="col-2 newMessage-back" (click)="close()">
+        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+      </div>
+      <div class="col-10 newMessage-title">
+        Datos Extra
+      </div>
+    </div>
+  </div>
+  <!-- Heading End -->
+
+  <!-- sideBar -->
+  <div class="row compose-sideBar">
+    <form method="POST" action="" class="form col">
+      <div class="col-12 btn-group" style="margin-top: 20px;">
+        <a href="http://www.infoescomar.pe" class="btn btn-secondary" target="_blank">ESCOMAR</a>
+        <a href="https://www.datasur.com/buscador/" class="btn btn-secondary" target="_blank">DATASUR</a>
+        <a href="http://www.aduanet.gob.pe/aduanas/informgest/sgdespa.htm#REGIMENES_DEFINITIVOS" class="btn btn-secondary" target="_blank">OPERATIVIDAD ADUANARA</a>
+      </div>
+      <div class="col-12"><hr></div>
+      <div class="col-12">
+        <tabset [justified]="true">
+          <tab heading="IA" style="padding: 15px;">
+            <div class="form-group">
+              <input [(ngModel)]="extraData.ia_cnt_tn" class="form-control" type="text" name="ia_cnt_tn" placeholder="Cantidad TN">
+            </div>
+            <div class="form-group">
+              <input [(ngModel)]="extraData.ia_product" class="form-control" type="text" name="ia_product" placeholder="Producto">
+            </div>
+            <div class="form-group">
+              <input [(ngModel)]="extraData.ia_origin" class="form-control" type="text" name="ia_origin" placeholder="Origen">
+            </div>
+            <div class="form-group">
+              <input [(ngModel)]="extraData.ia_airline" class="form-control" type="text" name="ia_airline" placeholder="Aerolinea">
+            </div>
+            <div class="form-group">
+              <input [(ngModel)]="extraData.ia_customs" class="form-control" type="text" name="ia_customs" placeholder="AG Aduana">
+            </div>
+          </tab>
+
+          <tab heading="EA" style="padding: 15px;">
+            <div class="form-group">
+              <input [(ngModel)]="extraData.ea_cnt_tn" class="form-control" type="text" name="ea_cnt_tn" placeholder="Cantidad TN">
+            </div>
+            <div class="form-group">
+              <input [(ngModel)]="extraData.ea_product" class="form-control" type="text" name="ea_product" placeholder="Producto">
+            </div>
+            <div class="form-group">
+              <input [(ngModel)]="extraData.ea_destiny" class="form-control" type="text" name="ea_destiny" placeholder="Destino">
+            </div>
+            <div class="form-group">
+              <input [(ngModel)]="extraData.ea_airline" class="form-control" type="text" name="ea_airline" placeholder="Aerolinea">
+            </div>
+            <div class="form-group">
+              <input [(ngModel)]="extraData.ea_customs" class="form-control" type="text" name="ea_customs" placeholder="AG Aduana">
+            </div>
+          </tab>
+
+          <tab heading="IM" style="padding: 15px;">
+            <div class="form-group">
+              <input [(ngModel)]="extraData.im_cnt_teus" class="form-control" type="text" name="im_cnt_teus" placeholder="Cantidad TEUS">
+            </div>
+            <div class="form-group">
+              <input [(ngModel)]="extraData.im_product" class="form-control" type="text" name="im_product" placeholder="Producto">
+            </div>
+            <div class="form-group">
+              <input [(ngModel)]="extraData.im_origin" class="form-control" type="text" name="im_origin" placeholder="Origen">
+            </div>
+            <div class="form-group">
+              <input [(ngModel)]="extraData.im_shipping_company" class="form-control" type="text" name="im_shipping_company" placeholder="Naviera">
+            </div>
+            <div class="form-group">
+              <input [(ngModel)]="extraData.im_customs" class="form-control" type="text" name="im_customs" placeholder="AG Aduana">
+            </div>
+          </tab>
+
+          <tab heading="EM" style="padding: 15px;">
+            <div class="form-group">
+              <input [(ngModel)]="extraData.em_cant_teus" class="form-control" type="text" name="em_cant_teus" placeholder="Cantidad TEUS">
+            </div>
+            <div class="form-group">
+              <input [(ngModel)]="extraData.em_product" class="form-control" type="text" name="em_product" placeholder="Producto">
+            </div>
+            <div class="form-group">
+              <input [(ngModel)]="extraData.em_destiny" class="form-control" type="text" name="em_destiny" placeholder="Destino">
+            </div>
+            <div class="form-group">
+              <input [(ngModel)]="extraData.em_shipping_company" class="form-control" type="text" name="em_shipping_company" placeholder="Naviera">
+            </div>
+            <div class="form-group">
+              <input [(ngModel)]="extraData.em_customs" class="form-control" type="text" name="em_customs" placeholder="AG Aduana">
+            </div>
+          </tab>
+        </tabset>
+        <div class="form-group">
+          <button type="submit" class="btn btn-block btn-default" (click)="saveData()">
+            <i class="fa fa-save"></i> {{textButton}}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
