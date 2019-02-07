@@ -96,6 +96,7 @@ export class ListCommentsComponent implements OnInit, AfterViewInit {
           comment.hour = null;
         } else {
           this.dataCalendarService.addDataCalendar(comment);
+          $('popover-container[role=tooltip]').hide();
         }
         }, error => console.log(error));
     }

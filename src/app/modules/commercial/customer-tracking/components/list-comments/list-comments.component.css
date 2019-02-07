@@ -1,13 +1,13 @@
 @import url(https://unpkg.com/ngx-bootstrap/datepicker/bs-datepicker.css);
 
 .direct-chat-text { white-space: pre-wrap; }
-.my-datepicker {
+/*.my-datepicker {
     width: 0px;
     height: 0px;
     position: relative;
     left: 170px;
     border: none;
-}
+}*/
 #comment-box {
 
 }

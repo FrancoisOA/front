@@ -20,6 +20,7 @@
                    value="{{comment.date | date:'dd/MM/yyyy'}}"
                    [bsValue]="comment.date"
                    [minDate]="minDate"
+                   placement="left"
                    disabled
                    readonly>
 
@@ -27,7 +28,7 @@
               <timepicker [(ngModel)]="comment.hour" [showMeridian]="false" (ngModelChange)="changedTime(comment, $event)"></timepicker>
               <button class="btn btn-danger btn-block" (click)="updateTime(comment)">Guardar</button>
             </ng-template>
-            <a href="javascript:void(0);" style="margin-right: 5px" [popover]="popTemplate" [outsideClick]="true" (click)="setTime(comment)" placement="bottom">
+            <a href="javascript:void(0);" style="margin-right: 5px" [popover]="popTemplate" [outsideClick]="true" (click)="setTime(comment)" placement="right" container="body">
               <i class="fas fa-clock-o"></i>
             </a>
             <input id="time"
