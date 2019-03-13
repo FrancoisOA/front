@@ -1,0 +1,296 @@
+<link rel="stylesheet" href="https://unpkg.com/ngx-bootstrap/datepicker/bs-datepicker.css">
+
+<div class="container-fluid mt-5">
+    <div class="row">
+        <!-- INGRESO DE FILTRO -->
+        <div class="col-md-2">
+            <label>PROVEEDOR</label>
+            <div class="input-group input-group-sm">
+                <input
+                    [(ngModel)]="proveedor_selected"
+                    [typeahead]="proveedor"
+                    [typeaheadScrollable]="true"
+                    [typeaheadOptionsInScrollableView]="5"
+                    type="text"
+                    class="form-control"
+                    autofocus
+                >
+            </div>
+        </div>
+        <div class="col-md-2">
+            <label>TIPO DE CARGA</label>
+            <div class="input-group input-group-sm">
+                <select class="selectpicker form-control">
+                    <option *ngFor='let tipocarga of tipocargas'>{{tipocarga}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <label>MONEDA</label>
+            <div class="input-group input-group-sm">
+                <select class="selectpicker form-control  ">
+                    <option *ngFor='let moneda of monedas'>{{moneda}}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <label>RECARGOS</label>
+            <div class="input-group input-group-sm">
+                <input
+                    type="text"
+                    class="form-control"
+                >
+            </div>
+        </div>
+        <div class="col-md-2">
+            <label>OBSERVACIONES</label>
+            <div class="input-group input-group-sm  d-flex justify-content-center">
+                <button
+                    type="button"
+                    class=" btn btn-primary btn-sm"
+                    data-toggle="modal"
+                    data-target="#observacionModal"
+                    (click)="showModal1()"
+                >
+                    <i class="fa fa-eye"></i>
+                </button>
+            </div>
+
+        </div>
+
+        <div class="col-md-2">
+            <label>VIGENCIA</label>
+            <div class="input-group input-group-sm">
+                <input
+                    class="form-control"
+                    #dp="bsDaterangepicker"
+                    bsDaterangepicker
+                    [minDate]="minDate"
+                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-red' }"
+                >
+            </div>
+        </div>
+    </div>
+
+    <!-- TABLA -->
+
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <!-- efecto fondo rojo y bordes visible -->
+            <table class="table table-sm table-bordered  rounded">
+                <thead class="text-dark bg-gray">
+                    <tr>
+                        <th style="width:15%">UNIDAD</th>
+                        <th>
+                            ZONA 1
+                            <!-- <i class="fa fa-question-circle-o"   (click)="add(1)" aria-hidden="true"></i> -->
+                            <i
+                                class="fa fa-question-circle-o"
+                                aria-hidden="true"
+                            ></i>
+                        </th>
+                        <th>
+                            ZONA 2
+                            <i
+                                class="fa fa-question-circle-o"
+                                aria-hidden="true"
+                            ></i>
+                        </th>
+                        <th>
+                            ZONA 3
+                            <i
+                                class="fa fa-question-circle-o"
+                                aria-hidden="true"
+                            ></i>
+                        </th>
+                        <th>
+                            ZONA 4
+                            <i
+                                class="fa fa-question-circle-o"
+                                aria-hidden="true"
+                            ></i>
+                        </th>
+                        <th>
+                            LURÍN
+                            <i
+                                class="fa fa-question-circle-o"
+                                aria-hidden="true"
+                            ></i>
+                        </th>
+                        <th>
+                            PTA. HERMOSA
+                            <i
+                                class="fa fa-question-circle-o"
+                                aria-hidden="true"
+                            ></i>
+                        </th>
+                        <!-- <th><a class="text-large">+ ZONA</a></th> -->
+                    </tr>
+
+                </thead>
+
+                <!-- reg es el valor del objeto / regs es el [] -->
+                <tbody>
+                    <!-- <tr *ngFor="let carga of cargas ; let i = index"> -->
+                    <tr *ngFor="let unidad of unidades">
+                        <td>
+                            <div class="input-group input-group-sm">
+                                <input
+                                    type="text"
+                                    class="form-control input-group input-group-text input-group-sm"
+                                    value={{unidad.uni}}
+                                    disabled
+                                >
+                            </div>
+                        </td>
+
+                        <!-- primer celda -->
+                        <td>
+                            <div class="input-group input-group-sm">
+
+                                <input
+                                    type="text"
+                                    class="form-control input-group input-group-sm"
+                                >
+                            </div>
+                        </td>
+
+                        <!--  -->
+                        <td>
+                            <div class="input-group input-group-sm">
+
+                                <input
+                                    type="text"
+                                    class="form-control input-group input-group-sm"
+                                >
+                            </div>
+                        </td>
+
+                        <!--  -->
+                        <td>
+                            <div class="input-group input-group-sm">
+
+                                <input
+                                    type="text"
+                                    class="form-control input-group input-group-sm"
+                                >
+                            </div>
+                        </td>
+
+                        <!--  -->
+                        <td>
+                            <div class="input-group input-group-sm">
+
+                                <input
+                                    type="text"
+                                    class="form-control input-group input-group-sm"
+                                >
+                            </div>
+                        </td>
+                        <!--  -->
+                        <td>
+                            <div class="input-group input-group-sm">
+
+                                <input
+                                    type="text"
+                                    class="form-control input-group input-group-sm"
+                                >
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-group input-group-sm">
+
+                                <input
+                                    type="text"
+                                    class="form-control input-group input-group-sm"
+                                >
+                            </div>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- <alert></alert> -->
+
+        </div>
+    </div>
+
+    <div class="alert alert-info alert-dismissible">
+        <button
+            type="button"
+            class="close"
+            data-dismiss="alert"
+        >
+            &times;
+        </button>
+        Zona 1: Callao, Carmen de la legua, Bellavista, Ventanilla
+    </div>
+
+</div>
+
+<!-- Modal -->
+<div
+    class="modal fade"
+    [class.show]="show1"
+    id="observacionModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+>
+    <div
+        class="modal-dialog modal-lg"
+        role="document"
+    >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5
+                    class="modal-title"
+                    id="exampleModalLabel"
+                >
+                    Observaciones
+                </h5>
+                <button
+                    type="button"
+                    class="close "
+                    data-dismiss="modal"
+                    aria-label="Close"
+                >
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="input-group">
+                        <textarea
+                            type="text"
+                            class="form-control"
+                            name="deploymentName"
+                            id="deploymentName"
+                            placeholder
+                            autofocus
+                            autocomplete="off"
+                        ></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                >
+                    Close
+                </button>
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                >
+                    Save changes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

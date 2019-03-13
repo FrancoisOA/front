@@ -1,0 +1,193 @@
+<link rel="stylesheet" href="https://unpkg.com/ngx-bootstrap/datepicker/bs-datepicker.css">
+<!-- TABLA -->
+<div class="container-fluid mt-5">
+<table class="table table-sm table-bordered  rounded">
+    <thead class="text-dark bg-gray">
+        <tr>
+            <th *ngFor="let cabecera of cabeceras ; let i = index">{{cabecera}}</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let nacionalplataforma of nacionalplataformas ; let i = index">
+
+            <!-- AGENTE ADUANAS -->
+            <td>
+                <div class="input-group input-group-sm">
+                    <input
+                        [(ngModel)]="agente_selected"
+                        [typeahead]="agente"
+                        [typeaheadScrollable]="true"
+                        [typeaheadOptionsInScrollableView]="5"
+                        class=" form-control  input-group input-group-sm"
+                        autofocus
+                    >
+                </div>
+            </td>
+
+            <!-- CARGA -->
+            <td>
+                <div class="input-group input-group-sm">
+                    <select class="selectpicker  form-control">
+                        <option
+                            disabled
+                            selected
+                        >
+                        </option>
+                        <option *ngFor='let tipocarga of tipocargas'>{{tipocarga}}</option>
+                    </select>
+                </div>
+            </td>
+
+            <!-- CIUDAD -->
+            <td>
+                <div class="input-group input-group-sm">
+                    <input
+                        [(ngModel)]="ciudad_origen_selected"
+                        [typeahead]="ciudad_origen"
+                        class=" form-control  input-group input-group-sm"
+                    >
+                </div>
+            </td>
+
+            <!-- CIUDAD -->
+            <td>
+                <div class="input-group input-group-sm">
+                    <input
+                        [(ngModel)]="ciudad_destino_selected"
+                        [typeahead]="ciudad_destino"
+                        class=" form-control  input-group input-group-sm"
+                    >
+                </div>
+            </td>
+
+            <!-- monedas -->
+            <td>
+                <div class="input-group input-group-sm">
+                    <select class="selectpicker  form-control">
+                        <option
+                            disabled
+                            selected
+                        >
+                        </option>
+                        <option *ngFor='let moneda of monedas'>{{moneda}}</option>
+                    </select>
+                </div>
+            </td>
+
+            <!-- equipo -->
+
+            <td>
+                <div class="input-group input-group-sm">
+                    <select class="selectpicker  form-control">
+                        <option
+                            disabled
+                            selected
+                        >
+                        </option>
+                        <option *ngFor='let equipo of equipos'>{{equipo}}</option>
+                    </select>
+                </div>
+            </td>
+
+            <!-- flete -->
+
+            <td>
+                <div class="input-group input-group-sm">
+                    <input
+                        type="text"
+                        class="form-control"
+                    >
+
+                </div>
+            </td>
+
+            <!-- RECARGos -->
+
+            <td>
+                <div class="input-group input-group-sm">
+                    <input
+                        type="text"
+                        class="form-control"
+                    >
+
+                </div>
+            </td>
+
+                            <!-- observaciuones -->
+
+
+                            <td>
+                                <div class="input-group input-group-sm  d-flex justify-content-center">
+                                    <button
+                                        type="button"
+                                        class=" btn btn-primary btn-sm"
+                                        data-toggle="modal"
+                                        data-target="#observacionModal"
+                                        (click)="showModal()"
+                                    >
+                                    <i class="fa fa-eye"></i>
+                                    </button>
+                                </div>
+                            </td>
+
+            <!-- VIGENCIA -->
+            <td>
+                <div class="input-group input-group-sm">
+                    <input
+                        type="text"
+                        class="form-control"
+                        [minDate]="minDate"
+                        bsDatepicker
+                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-red' }"
+                        (keydown.enter)="newRow()"
+                    >
+                </div>
+            </td>
+
+            <!-- boton nuevo registro -->
+            <td *ngIf="i>0">
+                <div class="col-auto">
+                    <button
+                        type="submit"
+                        class="btn btn-danger btn-sm"
+                        (click)="deleteRow(i)"
+                    >
+                        X
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" [class.show]="show" id="observacionModal" tabindex="-1" role="dialog"
+aria-labelledby="exampleModalLabel"
+ aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Observaciones</h5>
+				<button type="button" class="close " data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<div class="input-group">
+						<textarea type="text" class="form-control" name="deploymentName" id="deploymentName" [(ngModel)]="deploymentName" placeholder=""
+						 autofocus autocomplete="off" ></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
+				<button type="button" class="btn btn-primary">Save changes</button>
+			</div>
+		</div>
+	</div>
+</div>

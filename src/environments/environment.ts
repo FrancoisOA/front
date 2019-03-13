@@ -1,7 +1,7 @@
 // This file can be replaced during build by using the `fileReplacements` array.
-// `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
+// `ng build --prod` replaces http://10.19.98.54:8000/` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
-const domain = 'http://10.19.98.7:8000/';
+const domain = 'http://localhost:8000/';
 export const environment = {
   domain: domain,
   api: {
@@ -14,7 +14,8 @@ export const environment = {
     cargo: localStorage.getItem('cargo_id'),
     code: localStorage.getItem('user_id'),
     name: localStorage.getItem('user_name'),
-  }
+  },
+  commercial_manager: Number(localStorage.getItem('cargo_id')) === 26
 };
 
 /*

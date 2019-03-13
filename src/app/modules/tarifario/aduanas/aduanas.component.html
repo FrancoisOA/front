@@ -1,0 +1,399 @@
+<link rel="stylesheet" href="https://unpkg.com/ngx-bootstrap/datepicker/bs-datepicker.css">
+<!-- TABLA -->
+
+<nav class="navbar sticky-top navbar-light bg-light navbar-expand-lg">
+    <ul class="navbar-nav">
+        <li class="nav-item active">
+            <a class="nav-link">Aduanas</a>
+        </li>
+        <li class="nav-item">
+            <a
+                class="nav-link"
+                routerLink="/tarifario"
+                routerLinkActive="router-link-active"
+            >
+                Principal
+            </a>
+        </li>
+    </ul>
+</nav>
+<div class="containe-fluid mt-5">
+    <table class="table table-sm table-bordered  rounded">
+        <thead class="text-dark bg-gray">
+            <tr>
+                <th>CIUDAD</th>
+                <th>AGENTE ADUANAS</th>
+                <th>VIA</th>
+                <th [hidden]="myDropDown !=='2'">TIPO VIA</th>
+                <th>REGIMEN</th>
+                <th>MONEDA</th>
+                <th>TARIFA</th>
+                <th>OBS.</th>
+                <th>FECHA</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <!-- reg es el valor del objeto / regs es el [] -->
+        <tbody *ngFor="let aduana of aduanas ; let i = index">
+            <tr>
+
+                <!-- CIUDAD -->
+                <td>
+                    <div class="input-group input-group-sm">
+                        <ng-template #templatePort let-model="item" let-index="index">
+                            <img [src]="model.icon" class="mr-1" style="width: 16px"/>
+                            <span>{{model.text}}</span>
+                          </ng-template>
+                          <input id="search-origin" type="text" class="form-control" placeholder="Escriba aquí..."
+                                 [(ngModel)]="objectAduana.ciudad.text"
+                                 [typeaheadAsync]="true"
+                                 [typeahead]="searchPorts"
+                                 [typeaheadItemTemplate]="templatePort"
+                                 [typeaheadOptionsLimit]="10"
+                                 [typeaheadWaitMs]="300"
+                                 typeaheadOptionField="text"
+                                 (keyup)="setTextSearch($event)"
+                                 (typeaheadOnSelect)="onSelectPort ($event)"
+                                 [typeaheadScrollable]="true"
+                                 [typeaheadOptionsInScrollableView]="5"
+                                 style="font-size:90%"/>
+                    </div>
+                </td>
+
+                <!-- AGENTE ADUANAS -->
+                <td>
+                    <div class="input-group input-group-sm">
+                        <!-- por algun motivo no funciona: [appAutoFocus]="focus"   -->
+                      <input
+                        id="search-agente"
+
+                        placeholder="Escriba aquí..."
+                        type="text"
+                        [(ngModel)]="objectAduana.agente.name"
+                        [typeahead]="searchClients"
+                        [typeaheadOptionsLimit]="10"
+                        typeaheadOptionField="name"
+                        (keyup)="setTextSearch($event)"
+                        (typeaheadOnSelect)="onSelectClient($event)"
+                        [typeaheadScrollable]="true"
+                        [typeaheadOptionsInScrollableView]="5"
+                        class=" form-control  input-group input-group-sm"
+                        >
+                    </div>
+                </td>
+
+                <!-- VIAS -->
+                <td>
+                    <div class="input-group input-group-sm">
+                        <select
+                            [(ngModel)]="myDropDown"
+                            class="form-control form-control-sm"
+                        >
+                            <option
+                                *ngFor="let via of vias"
+                                value="{{via.code}}"
+                            >
+                                {{via.description}}
+                            </option>
+                        </select>
+                    </div>
+                </td>
+
+                <!-- tipo -->
+                <td [hidden]="myDropDown !=='2'">
+                    <div class="input-group input-group-sm">
+                        <select class="selectpicker  form-control">
+                            <option value>-</option>
+                            <option value="0">FCL</option>
+                            <option value="1">LCL</option>
+                        </select>
+                    </div>
+                </td>
+
+                <!-- REGIMEN -->
+                <td>
+                    <div class="input-group input-group-sm">
+                        <select class="selectpicker  form-control">
+                            <option value></option>
+                            <option value="0">importacion</option>
+                            <option value="1">exportacion</option>
+                        </select>
+                    </div>
+                </td>
+
+                <!-- MONEDA -->
+
+                <td>
+                    <div class="input-group input-group-sm">
+                        <select
+                            class="form-control form-control-sm"
+                            [(ngModel)]="aduana.currencies"
+                        >
+                            <option
+                                *ngFor="let item of currencies"
+                                value="{{item.code}}"
+                            >
+                                {{item.description}}
+                            </option>
+                        </select>
+                    </div>
+                </td>
+
+                <!-- tarifa por factor y concepto -->
+
+                <td>
+                    <div class="input-group input-group-sm  d-flex justify-content-center">
+                        <button
+                            type="button"
+                            class=" btn btn-primary btn-sm"
+                            data-toggle="modal"
+                            data-target="#tarifaModal"
+                            (click)="showtarifaModal()"
+                        >
+                            <i
+                                class="fa fa-money"
+                                aria-hidden="true"
+                            ></i>
+                        </button>
+
+                    </div>
+                </td>
+
+                <!-- OBSERVACIONES -->
+
+                <td>
+                    <div class="input-group input-group-sm  d-flex justify-content-center">
+                        <button
+                            type="button"
+                            class=" btn btn-primary btn-sm"
+                            data-toggle="modal"
+                            data-target="#observacionModal"
+                            (click)="showModal()"
+                        >
+                            <i class="fa fa-eye"></i>
+                        </button>
+                    </div>
+                </td>
+
+                <!-- VIGENCIA -->
+                <td>
+                    <div class="input-group input-group-sm">
+                        <input
+                            type="text"
+                            class="form-control"
+                            [minDate]="minDate"
+                            bsDatepicker
+                            [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-red' }"
+                            (keydown.enter)="newRow()"
+                            placement="left"
+                        >
+                    </div>
+                </td>
+
+                <!-- boton nuevo registro -->
+                <td *ngIf="i>0">
+                    <div class="col-auto">
+                        <button
+                            type="submit"
+                            class="btn btn-danger btn-sm"
+                            (click)="deleteRow(i)"
+                        >
+                            X
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal OBSERVACION -->
+<div
+    class="modal fade"
+    [class.show]="show"
+    id="observacionModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+>
+    <div
+        class="modal-dialog modal-lg"
+        role="document"
+    >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Observaciones</h5>
+                <button
+                    type="button"
+                    class="close "
+                    data-dismiss="modal"
+                    aria-label="Close"
+                >
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="input-group">
+                        <textarea
+                            type="text"
+                            class="form-control"
+
+                            autocomplete="off"
+                        ></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                >
+                    Close
+                </button>
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                >
+                    Save changes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL TARIFA POR CONCEPTO Y FACTOR -->
+<div
+    class="modal fade"
+    [class.show]="show"
+    id="tarifaModal"
+    tabindex="-1"
+    role="dialog"
+    aria-hidden="true"
+>
+    <div
+        class="modal-dialog modal-lg"
+        role="document"
+    >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">TARIFA</h5>
+                <button
+                    type="button"
+                    class="close "
+                    data-dismiss="modal"
+                    aria-label="Close"
+                >
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <table class="table table-sm table-bordered  rounded">
+                        <thead class="text-dark bg-gray">
+                            <tr>
+                                <th>CONCEPTOS</th>
+                                <th>FACTOR</th>
+                                <th>VALOR</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <!-- CONCEPTOS -->
+                        <tbody>
+                            <tr>
+                                <!-- <tr  *ngFor="let trf of aduana.tarifa  "> -->
+                                <td>
+
+                                    <div class="input-group input-group-sm">
+                                        <!-- [appAutoFocus]="focus" -->
+                                        <input
+                                        name="concept" type="text" class="form-control form-control-sm" placeholder="Escriba aquí..."
+                                        [(ngModel)]="objectadua.concepto.description"
+                                        (typeaheadOnSelect)="onSelectConcept($event)"
+                                        [typeahead]="searchConcepts"
+                                        typeaheadOptionField="description"
+                                        (keyup)="setTextSearch($event)"
+                                        [typeaheadOptionsLimit]="10"
+                                        [typeaheadWaitMs]="100"
+                                        [typeaheadScrollable]="true"
+                                        [typeaheadOptionsInScrollableView]="5"
+                                        >
+                                        <i class="fa fa-fw fa-spinner fa-spin float-right input-loading hide"></i>
+                                    </div>
+
+                                </td>
+                                <!-- FACTOR -->
+                                <td>
+                                    <div class="input-group input-group-sm">
+                                        <select
+                                            class="form-control form-control-sm"
+                                            [(ngModel)]="Rangoparakg"
+                                        >
+                                            <option
+                                                *ngFor="let factor of factors"
+                                                value="{{factor.code}}"
+                                            >
+                                                {{factor.description}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </td>
+
+                                <!-- VALOR -->
+                                <!-- (keydown.enter)="nuevoRow()" -->
+                                <td>
+                                    <div class="input-group input-group-sm">
+
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            (input)="carData = deleteInputStream($event)"
+                                        >
+                                    </div>
+                                </td>
+
+                                <!-- boton nuevo registro -->
+                                <!-- (click)="eliminarRow(j)" -->
+                                <!-- <td *ngIf="j>0">
+                                                            <div class="col-auto">
+                                                                <button
+                                                                    type="submit"
+                                                                    class="btn btn-danger btn-sm"
+
+                                                                >
+                                                                    X
+                                                                </button>
+                                                            </div>
+                                                        </td> -->
+
+                            </tr>
+                        </tbody>
+
+
+                    </table>
+
+                    <div class="modal-footer">
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-dismiss="modal"
+                        >
+                            Close
+                        </button>
+                        <button
+                            type="button"
+                            class="btn btn-primary"
+                        >
+                            Save changes
+                        </button>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

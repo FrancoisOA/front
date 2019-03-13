@@ -1,0 +1,364 @@
+<link rel="stylesheet" href="https://unpkg.com/ngx-bootstrap/datepicker/bs-datepicker.css">
+<!-- TABLA -->
+
+<nav class="navbar sticky-top navbar-light bg-light navbar-expand-lg">
+    <ul class="navbar-nav">
+        <li class="nav-item active">
+            <a class="nav-link">Almacenaje |</a>
+        </li>
+        <li class="nav-item">
+            <a
+                class="nav-link"
+                routerLink="/tarifario"
+                routerLinkActive="router-link-active"
+            >
+                Principal
+            </a>
+        </li>
+    </ul>
+</nav>
+<div class="container-fluid mt-5">
+    <table class="table table-sm table-bordered  rounded">
+        <thead class="text-dark bg-gray">
+            <tr>
+                <th>ALMACENAJE/ TERMINAL</th>
+                <th>VIA</th>
+                <th [hidden]="myDropDown !=='2'">TIPO VIA</th>
+                <th>TIPO</th>
+                <th>MONEDA</th>
+                <th>TARIFA</th>
+                <th>OBSERVACIONES</th>
+                <th>FECHA</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <!-- reg es el valor del objeto / regs es el [] -->
+        <tbody>
+            <tr *ngFor="let almacenaje of almacenajes ; let i = index">
+
+                <!-- almacenaje -->
+                <td>
+                    <div class="input-group input-group-sm">
+                        <input
+                        id="search-agente"
+
+                        placeholder="Escriba aquí..."
+                        type="text"
+                        [(ngModel)]="objectAlm.almacenaje.name"
+                        [typeahead]="searchClients"
+                        [typeaheadOptionsLimit]="10"
+                        typeaheadOptionField="name"
+                        (keyup)="setTextSearch($event)"
+                        (typeaheadOnSelect)="onSelectClient($event)"
+                        [typeaheadScrollable]="true"
+                        [typeaheadOptionsInScrollableView]="5"
+                        class=" form-control  input-group input-group-sm"
+                        >
+                    </div>
+                </td>
+
+                <!--   VIAS -->
+
+                <td>
+                    <div class="input-group input-group-sm">
+                        <select
+                            [(ngModel)]="myDropDown"
+                            class="form-control form-control-sm"
+                        >
+                            <option
+                                *ngFor="let via of vias"
+                                value="{{via.code}}"
+                            >
+                                {{via.description}}
+                            </option>
+                        </select>
+                    </div>
+                </td>
+
+                <!-- tipo VIA MARITIMA -->
+                <td [hidden]="myDropDown !=='2'">
+                    <div class="input-group input-group-sm">
+                        <select class="selectpicker  form-control">
+                            <option value>-</option>
+                            <option value="0">FCL</option>
+                            <option value="1">LCL</option>
+                        </select>
+                    </div>
+                </td>
+
+                <!-- TIPO -->
+
+                <td>
+                    <div class="input-group input-group-sm">
+                        <select class="selectpicker  form-control">
+                            <option *ngFor='let tipo of tipos'>{{tipo}}</option>
+                        </select>
+                    </div>
+                </td>
+
+                <!-- MONEDA -->
+
+                <td>
+                    <div class="input-group input-group-sm">
+                        <select
+                            class="form-control form-control-sm"
+                            [(ngModel)]="almacenajes.currencies"
+                        >
+                            <option
+                                *ngFor="let item of currencies"
+                                value="{{item.code}}"
+                            >
+                                {{item.description}}
+                            </option>
+                        </select>
+                    </div>
+                </td>
+
+                <!-- TARIFA -->
+
+                <td>
+                    <div class="input-group input-group-sm  d-flex justify-content-center">
+                        <button
+                            type="button"
+                            class=" btn btn-primary btn-sm"
+                            data-toggle="modal"
+                            data-target="#tarifaxfactorModal"
+                            (click)="showtarifaxfactorModal()"
+                        >
+                            <i class="fa fa-money"></i>
+                        </button>
+                    </div>
+                </td>
+
+                <!-- OBSERVACIONES -->
+
+                <td>
+                    <div class="input-group input-group-sm  d-flex justify-content-center">
+                        <button
+                            type="button"
+                            class=" btn btn-primary btn-sm"
+                            data-toggle="modal"
+                            data-target="#observacionModal"
+                            (click)="showModal()"
+                        >
+                            <i class="fa fa-eye"></i>
+                        </button>
+                    </div>
+                </td>
+
+                <!-- VIGENCIA -->
+                <td>
+                    <div class="input-group input-group-sm">
+                        <input
+                            type="text"
+                            class="form-control"
+                            [minDate]="minDate"
+                            bsDatepicker
+                            [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-red' }"
+                            (keydown.enter)="newRow()"
+                            placement="left"
+                        >
+                    </div>
+                </td>
+
+                <!-- boton nuevo registro -->
+                <td *ngIf="i>0">
+                    <div class="col-auto">
+                        <button
+                            type="submit"
+                            class="btn btn-danger btn-sm"
+                            (click)="deleteRow(i)"
+                        >
+                            X
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal -->
+<div
+    class="modal fade"
+    [class.show]="show"
+    id="observacionModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+>
+    <div
+        class="modal-dialog modal-lg"
+        role="document"
+    >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5
+                    class="modal-title"
+                    id="exampleModalLabel"
+                >
+                    Observaciones
+                </h5>
+                <button
+                    type="button"
+                    class="close "
+                    data-dismiss="modal"
+                    aria-label="Close"
+                >
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="input-group">
+                        <textarea
+                            type="text"
+                            class="form-control"
+                            name="deploymentName"
+                            id="deploymentName"
+                            [(ngModel)]="deploymentName"
+                            autofocus
+                            autocomplete="off"
+                        ></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                >
+                    Close
+                </button>
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                >
+                    Save changes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div
+    class="modal fade"
+    [class.show]="showtarifaxfactor"
+    id="tarifaxfactorModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+>
+    <div
+        class="modal-dialog modal-lg"
+        role="document"
+    >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5
+                    class="modal-title"
+                    id="exampleModalLabel"
+                >
+                    TARIFA
+                </h5>
+                <button
+                    type="button"
+                    class="close "
+                    data-dismiss="modal"
+                    aria-label="Close"
+                >
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+
+                    <table class="table table-sm table-bordered  rounded">
+                        <thead class="text-dark bg-gray">
+                            <tr>
+                                <th style="width: 20%">CONCEPTOS</th>
+                                <th style="width: 20%">FACTOR</th>
+                                <th>VALOR</th>
+                            </tr>
+                        </thead>
+                        <!-- CONCEPTOS -->
+                        <tbody>
+                            <tr>
+
+                                <td>
+                                    <div class="input-group input-group-sm">
+                                        <input
+                                        name="concept" type="text" class="form-control form-control-sm" placeholder="Escriba aquí..."
+                                        [(ngModel)]="objectAlm.concepto.description"
+                                        (typeaheadOnSelect)="onSelectConcept($event)"
+                                        [typeahead]="searchConcepts"
+                                        typeaheadOptionField="description"
+                                        (keyup)="setTextSearch($event)"
+                                        [typeaheadOptionsLimit]="10"
+                                        [typeaheadWaitMs]="100"
+                                        [typeaheadScrollable]="true"
+                                        [typeaheadOptionsInScrollableView]="5"
+                                        >
+                                    </div>
+                                </td>
+
+                                <!-- septima celda  FACTOR -->
+
+                                <td>
+                                    <div class="input-group input-group-sm">
+                                        <select
+                                            class="form-control form-control-sm"
+                                            [(ngModel)]="almacenajes.factors"
+                                        >
+                                            <option
+                                                *ngFor="let factor of factors"
+                                                value="{{factor.code}}"
+                                            >
+                                                {{factor.description}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </td>
+
+                                <!-- VALOR -->
+                                <td style="width: 9%">
+                                    <div class="input-group input-group-sm">
+
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            (input)="carData = deleteInputStream($event)"
+                                        >
+
+                                    </div>
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                >
+                    Close
+                </button>
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                >
+                    Save changes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

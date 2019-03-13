@@ -10,6 +10,7 @@ const routes: Routes = [
           { path: '', redirectTo: 'dashboard', pathMatch: 'prefix' },
           { path: 'dashboard', loadChildren: '../dashboard/dashboard.module#DashboardModule' },
           { path: 'commercial', loadChildren: '../commercial/quote/quote.module#QuoteModule' },
+          // { path: 'tarifario', loadChildren: 'src/app/modules/tarifario/tarifario.module#TarifarioModule' }
       ]
     }
 ];

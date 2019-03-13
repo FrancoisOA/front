@@ -1,0 +1,156 @@
+<link rel="stylesheet" href="https://unpkg.com/ngx-bootstrap/datepicker/bs-datepicker.css">
+<!-- TABLA -->
+<div class="container-fluid mt-5">
+<table class="table table-sm table-bordered  rounded">
+  <thead class="text-dark bg-gray">
+  <tr>
+    <th>PROVEEDOR</th>
+    <th>TIPO DE CARGA</th>
+    <th>CIUDAD ORIGEN</th>
+    <th>CIUDAD DESTINO</th>
+    <th>SERVICIO</th>
+    <th>MONEDA</th>
+    <th>RANGO</th>
+    <th>FLETE</th>
+    <th>RECARGOS</th>
+    <th>OBSERVACIONES</th>
+    <th>FECHA</th>
+    <th></th>
+  </tr>
+  </thead>
+
+  <!-- reg es el valor del objeto / regs es el [] -->
+  <tbody >
+   <tr *ngFor="let aduana of aduanas ; let i = index">
+
+    <!--  CIUDAD -->
+    <td>
+        <div class ="input-group input-group-sm">
+            <input
+            [(ngModel)]="ciudad_selected"
+            [typeahead]="ciudad"
+            [typeaheadScrollable]="true"
+            [typeaheadOptionsInScrollableView]="5"
+            class=" form-control  input-group input-group-sm"
+            autofocus>
+        </div>
+    </td>
+
+       <!--  AGENTE ADUANAS -->
+       <td>
+        <div class ="input-group input-group-sm">
+            <input
+            [(ngModel)]="agente_selected"
+            [typeahead]="agente"
+            [typeaheadScrollable]="true"
+            [typeaheadOptionsInScrollableView]="5"
+            class=" form-control  input-group input-group-sm">
+        </div>
+    </td>
+
+
+
+    <!--  AGENTE VIAS-->
+    <td>
+      <div class ="input-group input-group-sm">
+        <select class="selectpicker  form-control">
+          <option disabled  selected>VIAS</option>
+          <option *ngFor='let via of vias'>{{via}}</option>
+      </select>
+      </div>
+   </td>
+
+
+    <!--  REGIMEN -->
+
+    <td>
+      <div class ="input-group input-group-sm">
+        <select class="selectpicker  form-control">
+          <option disabled  selected>REGIMEN</option>
+          <option *ngFor='let regimen of regimenes'>{{regimen}}</option>
+      </select>
+      </div>
+   </td>
+
+
+    <!--  MONEDA -->
+
+    <td>
+      <div class ="input-group input-group-sm">
+        <select class="selectpicker  form-control">
+          <option disabled  selected>MONEDA</option>
+          <option *ngFor='let moneda of monedas'>{{moneda}}</option>
+      </select>
+      </div>
+   </td>
+
+       <!--  CONCEPTOS -->
+
+       <td>
+        <div class ="input-group input-group-sm">
+          <select class="selectpicker  form-control">
+            <option disabled  selected>CONCEPTOS</option>
+            <option *ngFor='let concepto of conceptos'>{{concepto}}</option>
+        </select>
+        </div>
+     </td>
+
+
+    <!--  VALOR -->
+    <td>
+      <div class ="input-group input-group-sm">
+        <input type ="text"class ="form-control">
+
+      </div>
+    </td>
+
+    <!-- septima celda  FACTOR -->
+
+
+    <td>
+      <div class ="input-group input-group-sm">
+        <select class="selectpicker  form-control">
+          <option disabled  selected>FACTOR</option>
+          <option *ngFor='let factor of factores'>{{factor}}</option>
+      </select>
+      </div>
+   </td>
+
+
+
+    <!--  OBSERVACIONES -->
+
+    <td>
+      <div class ="input-group input-group-sm">
+        <input type ="text"class ="form-control">
+      </div>
+    </td>
+
+
+    <!--    VIGENCIA -->
+    <td>
+      <div class="input-group input-group-sm">
+        <input type="text"
+        class="form-control"
+        [minDate]="minDate"
+        bsDatepicker
+        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-red' }"
+        (keydown.enter)="newRow()"
+          >
+      </div>
+  </td>
+
+
+    <!-- boton nuevo registro -->
+     <td *ngIf= "i>0">
+      <div class="col-auto" >
+        <button type="submit"class="btn btn-danger btn-sm"
+        (click)="deleteRow(i)"
+        >
+        X</button>
+      </div>
+    </td>
+  </tr>
+  </tbody>
+</table>
+</div>

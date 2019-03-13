@@ -1,0 +1,7 @@
+div.a, span,th,td,tr,input {
+  font-size: 90%;
+}
+
+th {
+  text-align:center;
+} 

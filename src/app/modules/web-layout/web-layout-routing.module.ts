@@ -11,6 +11,9 @@ const routes: Routes = [
           { path: 'dashboard', loadChildren: '../dashboard/dashboard.module#DashboardModule' },
           { path: 'commercial', loadChildren: '../commercial/quote/quote.module#QuoteModule' },
           { path: 'customer-tracking', loadChildren: '../commercial/customer-tracking/customer-tracking.module#CustomerTrackingModule' },
+
+          // { path: 'tarifario', loadChildren: 'src/app/modules/tarifario/gastos/gastos.module#GastosModule' },
+
       ]
     }
 ];

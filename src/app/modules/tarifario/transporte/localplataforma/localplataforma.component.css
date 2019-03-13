@@ -1,0 +1,10 @@
+div.a, span,th,td,tr, label {
+  font-size: 12px;
+}
+
+th {
+  text-align:center;
+}
+
+
+i{ cursor: pointer; }

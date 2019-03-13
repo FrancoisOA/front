@@ -1,0 +1,8 @@
+div.a, span,th,td,tr {
+  font-size: 12px;
+}
+
+th {
+  text-align:center;
+}
+

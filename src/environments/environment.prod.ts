@@ -1,4 +1,4 @@
-const domain = 'http://10.19.98.7:8000/';
+const domain = 'http://localhost:8000/';
 export const environment = {
   domain: domain,
   api: {
@@ -11,5 +11,6 @@ export const environment = {
     cargo: localStorage.getItem('cargo_id'),
     code: localStorage.getItem('user_id'),
     name: localStorage.getItem('user_name'),
-  }
+  },
+  commercial_manager: Number(localStorage.getItem('cargo_id')) === 26
 };
